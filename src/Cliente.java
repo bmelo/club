@@ -1,22 +1,23 @@
-package v1;
+package v2;
 
 public class Cliente {
-	int id;
-	String cpf;
-	String nome;
-	double saldo;
 
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+	private int id;
+	private String nome;
+	private String cpf;
+	private double saldo;
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	public String getNome() {
 		return nome;
