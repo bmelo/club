@@ -1,0 +1,138 @@
+USUÁRIO
+
+CREATE ROLE sysclub LOGIN
+  ENCRYPTED PASSWORD 'md5f77509b7d52d985bfdb2186bc0be74cb'
+  SUPERUSER INHERIT CREATEDB CREATEROLE;
+
+------------------------------------------------------------------------------
+
+TABLESPACE
+
+CREATE TABLESPACE sysclub
+  OWNER sysclub
+  LOCATION 'c:/tablespaces';
+
+------------------------------------------------------------------------------
+
+SEQUÊNCIAS
+
+CREATE SEQUENCE id_dependente
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE id_dependente OWNER TO sysclub;
+
+CREATE SEQUENCE idsocio
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE idsocio OWNER TO sysclub;
+
+CREATE SEQUENCE idproduto
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE idproduto OWNER TO sysclub;
+
+------------------------------------------------------------------------------
+
+TABELAS
+
+CREATE TABLE socios
+(
+  id smallint NOT NULL DEFAULT nextval('idsocio'::regclass),
+  nome character varying(50),
+  cpf character varying(11) NOT NULL,
+  saldo numeric(10,2) DEFAULT 0.00,
+  endereco character varying(100),
+  cep character varying(9),
+  bairro character varying(50),
+  cidade character varying(30),
+  uf character varying(2),
+  CONSTRAINT "PK" PRIMARY KEY (id) USING INDEX TABLESPACE sysclub,
+  CONSTRAINT "UCPF" UNIQUE (cpf) USING INDEX TABLESPACE sysclub
+)
+WITH (OIDS=FALSE)
+TABLESPACE sysclub;
+ALTER TABLE socios OWNER TO sysclub;
+
+CREATE TABLE socios_dependentes
+(
+  id smallint NOT NULL DEFAULT nextval('id_dependente'::regclass),
+  id_socio smallint NOT NULL,
+  nome character varying(50),
+  CONSTRAINT "PKDEP" PRIMARY KEY (id) USING INDEX TABLESPACE sysclub,
+  CONSTRAINT fkdependentes FOREIGN KEY (id_socio)
+      REFERENCES socios (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE
+)
+WITH (OIDS=FALSE)
+TABLESPACE sysclub;
+ALTER TABLE socios_dependentes OWNER TO sysclub;
+
+CREATE TABLE produtos
+(
+  id smallint NOT NULL DEFAULT nextval('idproduto'::regclass),
+  nome character varying(80),
+  valor numeric(10,2),
+  descricao character varying(200), -- Descrição dos Produtos.
+  CONSTRAINT pk PRIMARY KEY (id) USING INDEX TABLESPACE sysclub,
+  CONSTRAINT "UNOME" UNIQUE (nome) USING INDEX TABLESPACE sysclub
+)
+WITH (OIDS=FALSE)
+TABLESPACE sysclub;
+ALTER TABLE produtos OWNER TO sysclub;
+COMMENT ON TABLE produtos IS 'Tabela com os dados dos produtos';
+COMMENT ON COLUMN produtos.descricao IS 'Descrição dos Produtos.';
+
+------------------------------------------------------------------------------
+
+RESTRIÇÕES - ADIÁVEIS SÓ A CHAVE ESTRANGEIRA!
+
+ALTER TABLE socios
+  ADD CONSTRAINT "PK" PRIMARY KEY(id) USING INDEX TABLESPACE sysclub;
+
+ALTER TABLE socios
+  ADD CONSTRAINT "UCPF" UNIQUE(cpf) USING INDEX TABLESPACE sysclub;
+
+ALTER TABLE socios_dependentes
+  ADD CONSTRAINT "PKDEP" PRIMARY KEY(id) USING INDEX TABLESPACE sysclub;
+
+ALTER TABLE socios_dependentes
+  ADD CONSTRAINT fkdependentes FOREIGN KEY (id_cliente)
+      REFERENCES socios (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE produtos
+  ADD CONSTRAINT pk PRIMARY KEY(id) USING INDEX TABLESPACE sysclub;
+
+ALTER TABLE produtos
+  ADD CONSTRAINT "UNOME" UNIQUE(nome) USING INDEX TABLESPACE sysclub;
+
+------------------------------------------------------------------------------
+
+ÍNDICES
+
+CREATE INDEX "IN_IDSO"
+  ON socios
+  USING btree
+  (id)
+TABLESPACE sysclub;
+
+CREATE INDEX "IN_IDDEP"
+  ON socios_dependentes
+  USING btree
+  (id)
+TABLESPACE sysclub;
+
+CREATE INDEX "IN_IDPROD"
+  ON produtos
+  USING btree
+  (id)
+TABLESPACE sysclub;

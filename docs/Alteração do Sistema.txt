@@ -1,0 +1,43 @@
+* Criar Tela de Abertura (Iniciar)
+
+* "Cliente" substituir por "Sócio" ok
+
+* "Adicionar" mudar para "Cadastrar" ok
+
+* "Vender" substituir por "consumir" ok
+
+* Adicionar Endereço do Sócio
+
+* Validar campo CPF
+
+* Menu Ajuda - sobre
+
+* para remover o socio(cliente) ele poderia abrir tela de pesquisa listando!
+
+* Em produto / adicionar / criar campo descrição...
+
+* Tirar menu arquivo e colocar sair OK
+
+
+---------------------------------------------------
+
+
+* Remover - SÓCIO E DEPENDENTE (duas variáveis independentes)
+
+* impedir o acesso da tela em segundo plano
+
+* abrir tela centralizando-a
+
+* ao consumir (vender) ou quando finalizar qualquer operação,  mostrar mensagem "operação realizada com sucesso!"
+
+* venda não esta sendo descontado do Saldo  esta sendo somado
+
+* não deixar redimensionar as janelas
+
+* na coluna Valor, acresentar Valor R$ e colocar numeros no formato "0,00" (com duas casas decimais)
+
+* Não Deixar cadastrar Sócio com mesmo CPF e Produto com o mesmo nome
+
+* lançar ID ordem crescente partindo do ID "1" (ex: 1, 2, 3 ...) OK
+
+* No cadastro de sócio, na parte de dependente, colocar um campo de inserção e um botão "inserir" e ir mostrando as inserções em baixo, colocar restrinção até 5.
