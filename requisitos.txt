@@ -1,0 +1,18 @@
+------------------------------------------------
+
+-implementação 
+	-Consulta/relatório:
+	  ::Junção
+	  ::Funções de agregação
+	  ::Subconsultas
+	  ::Operadores SET
+-Modelagem
+	-Modelo físico(ferramenta de modelagem)
+	-Script de geração dos objetos
+	  ::View, sequence
+	  ::Índice BITmap, normal(árvore B+)
+	  ::Constraints adiáveis
+	  ::TablePaces
+
+	-Usuário(dono das tabelas)
+------------------------------------------------
